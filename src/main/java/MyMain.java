@@ -152,15 +152,13 @@ public class MyMain {
     // Examples:
     /// insertionSort([6, 3, 4, 1, 5, 8, 7, 2]) => [1, 2, 3, 4, 5, 6, 7, 8]
     public static ArrayList<Integer> insertionSort(ArrayList<Integer> list) {
-        if(list.size() == 1){
+        if (list.size()==1){
             return list;
         }
         else{
-            int temp = list.get(list.size()- 1);
-            list.remove(list.size() - 1);
-            list = insertionSort(list);
-            list = insert(list, temp);
-            return list;
+            int last = list.get(list.size()-1);
+            list.remove(list.size()-1);
+            return insert(insertionSort(list),last);
         }
     }
 }
