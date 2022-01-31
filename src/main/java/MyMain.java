@@ -7,8 +7,38 @@ public class MyMain {
     // ********************
 
     public static int[] merge(int[] arr1, int[] arr2) {
-        // COPY AND PASTE YOUR CODE HERE
-        return new int[] {1, 2, 3, 4};
+        int[] new_arr = new int[arr1.length + arr2.length];
+        int new_index = 0;
+        int arr1_index = 0;
+        int arr2_index = 0;
+
+        while (arr1_index < arr1.length && arr2_index < arr2.length && new_index < new_arr.length) {
+            while (arr1_index < arr1.length && arr2_index < arr2.length && arr1[arr1_index] < arr2[arr2_index]) {
+                new_arr[new_index] = arr1[arr1_index];
+                arr1_index++;
+                new_index++;
+            }
+            while (arr2_index < arr2.length && arr1_index < arr1.length && arr2[arr2_index] < arr1[arr1_index]) {
+                new_arr[new_index] = arr2[arr2_index];
+                arr2_index++;
+                new_index++;
+            }
+        }
+
+        if (arr1_index < arr1.length) {
+            for (int i = arr1_index; i < arr1.length; i++) {
+                new_arr[new_index] = arr1[i];
+                new_index++;
+            }
+        }
+        if (arr2_index < arr2.length) {
+            for (int j = arr2_index; j < arr2.length; j++) {
+                new_arr[new_index] = arr2[j];
+                new_index++;
+            }
+        }
+
+        return new_arr;
     }
 
     // **************************
@@ -25,8 +55,15 @@ public class MyMain {
     // subArray([1, 4, 3, 7], 0, 4) => [1, 4, 3, 7]
     // subArray([1, 4, 3, 7], 2, 4) => [3, 7]
     public static int[] subArray(int[] arr, int begin, int end) {
-        // YOUR CODE HERE
-        return null;
+        int i = 0;
+        int index = begin;
+        int[] new_arr = new int[end-begin];
+        while(index < end){
+            new_arr[i] = arr[index];
+            index++;
+            i++;
+        }
+        return new_arr;
     }
 
     // Carries out merge sort!
@@ -43,8 +80,13 @@ public class MyMain {
     // Examples:
     // mergeSort([6, 3, 4, 1, 5, 8, 7, 2]) => [1, 2, 3, 4, 5, 6, 7, 8]
     public static int[] mergeSort(int[] arr) {
-        // YOUR CODE HERE
-        return null;
+        if(arr.length <= 1){
+            return arr;
+        }
+        int[] new_arr1 = subArray(arr,0, arr.length/2);
+        int[] new_arr2 = subArray(arr,arr.length/2, arr.length);
+
+        return merge(new_arr1,new_arr2);
     }
 
 
@@ -79,8 +121,17 @@ public class MyMain {
 
     // Tail recursive method
     public static ArrayList<Integer> insertTR(ArrayList<Integer> list, int x, int i) {
-        // YOUR CODE HERE
-        return null;
+        if(i == list.size()){
+            list.add(i, x);
+            return list;
+        }
+        if(list.get(i) > x){
+            list.add(i,x);
+            return list;
+        }
+        else{
+            return insertTR(list,x,i++);
+        }
     }
 
     // Next, write the insertion sort method, which is sorts a given
@@ -101,7 +152,15 @@ public class MyMain {
     // Examples:
     /// insertionSort([6, 3, 4, 1, 5, 8, 7, 2]) => [1, 2, 3, 4, 5, 6, 7, 8]
     public static ArrayList<Integer> insertionSort(ArrayList<Integer> list) {
-        // YOUR CODE HERE
-        return null;
+        if(list.size() == 1){
+            return list;
+        }
+        else{
+            int temp = list.get(list.size()- 1);
+            list.remove(list.size() - 1);
+            list = insertionSort(list);
+            list = insert(list, temp);
+            return list;
+        }
     }
 }
