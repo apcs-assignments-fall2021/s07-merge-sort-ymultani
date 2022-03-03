@@ -7,38 +7,32 @@ public class MyMain {
     // ********************
 
     public static int[] merge(int[] arr1, int[] arr2) {
-        int[] new_arr = new int[arr1.length + arr2.length];
-        int new_index = 0;
-        int arr1_index = 0;
-        int arr2_index = 0;
-
-        while (arr1_index < arr1.length && arr2_index < arr2.length && new_index < new_arr.length) {
-            while (arr1_index < arr1.length && arr2_index < arr2.length && arr1[arr1_index] < arr2[arr2_index]) {
-                new_arr[new_index] = arr1[arr1_index];
-                arr1_index++;
-                new_index++;
-            }
-            while (arr2_index < arr2.length && arr1_index < arr1.length && arr2[arr2_index] < arr1[arr1_index]) {
-                new_arr[new_index] = arr2[arr2_index];
-                arr2_index++;
-                new_index++;
+        int[] merged = new int[(arr1.length + arr2.length)];
+        int arr1Index = 0;
+        int arr2Index = 0;
+        int mergedIndex = 0;
+        while (arr1Index < arr1.length && arr2Index < arr2.length) {
+            if (arr1[arr1Index] < arr2[arr2Index]) {
+                merged[mergedIndex] = arr1[arr1Index];
+                arr1Index++;
+                mergedIndex++;
+            } else {
+                merged[mergedIndex] = arr2[arr2Index];
+                arr2Index++;
+                mergedIndex++;
             }
         }
-
-        if (arr1_index < arr1.length) {
-            for (int i = arr1_index; i < arr1.length; i++) {
-                new_arr[new_index] = arr1[i];
-                new_index++;
-            }
+        while (arr1Index < arr1.length) {
+            merged[mergedIndex] = arr1[arr1Index];
+            mergedIndex++;
+            arr1Index++;
         }
-        if (arr2_index < arr2.length) {
-            for (int j = arr2_index; j < arr2.length; j++) {
-                new_arr[new_index] = arr2[j];
-                new_index++;
-            }
+        while (arr2Index < arr2.length) {
+            merged[mergedIndex] = arr2[arr2Index];
+            mergedIndex++;
+            arr2Index++;
         }
-
-        return new_arr;
+        return merged;
     }
 
     // **************************
