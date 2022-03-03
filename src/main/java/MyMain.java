@@ -7,32 +7,33 @@ public class MyMain {
     // ********************
 
     public static int[] merge(int[] arr1, int[] arr2) {
-        int[] merged = new int[(arr1.length + arr2.length)];
-        int arr1Index = 0;
-        int arr2Index = 0;
-        int mergedIndex = 0;
-        while (arr1Index < arr1.length && arr2Index < arr2.length) {
-            if (arr1[arr1Index] < arr2[arr2Index]) {
-                merged[mergedIndex] = arr1[arr1Index];
-                arr1Index++;
-                mergedIndex++;
-            } else {
-                merged[mergedIndex] = arr2[arr2Index];
-                arr2Index++;
-                mergedIndex++;
+        int[] output = new int[arr1.length + arr2.length];
+        int index1 = 0;
+        int index2 = 0;
+        int outputIndex = 0;
+
+        while (index1 < arr1.length && index2 < arr2.length) {
+            if (arr1[index1] <= arr2[index2]) {
+                output[outputIndex] = arr1[index1];
+                index1++;
             }
+            else {
+                output[outputIndex] = arr2[index2];
+                index2++;
+            }
+            outputIndex++;
         }
-        while (arr1Index < arr1.length) {
-            merged[mergedIndex] = arr1[arr1Index];
-            mergedIndex++;
-            arr1Index++;
+        while (index1 < arr1.length) {
+            output[outputIndex] = arr1[index1];
+            index1++;
+            outputIndex++;
         }
-        while (arr2Index < arr2.length) {
-            merged[mergedIndex] = arr2[arr2Index];
-            mergedIndex++;
-            arr2Index++;
+        while (index2 < arr2.length) {
+            output[outputIndex] = arr2[index2];
+            index2++;
+            outputIndex++;
         }
-        return merged;
+        return output;
     }
 
     // **************************
@@ -74,13 +75,16 @@ public class MyMain {
     // Examples:
     // mergeSort([6, 3, 4, 1, 5, 8, 7, 2]) => [1, 2, 3, 4, 5, 6, 7, 8]
     public static int[] mergeSort(int[] arr) {
-        if(arr.length <= 1){
+        if (arr.length == 1) {
             return arr;
         }
-        int[] new_arr1 = subArray(arr,0, arr.length/2);
-        int[] new_arr2 = subArray(arr,arr.length/2, arr.length);
-
-        return merge(new_arr1,new_arr2);
+        // Recursive call
+        else {
+            int middle = arr.length / 2;
+            int[] left = subArray(arr, 0, middle);
+            int[] right = subArray(arr, middle, arr.length);
+            return merge(mergeSort(left), mergeSort(right));
+        }
     }
 
 
